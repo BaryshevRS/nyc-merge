@@ -1,0 +1,30 @@
+{
+  "name": "nyc-merge",
+  "version": "0.0.1",
+  "description": "A tool to merge Istanbul coverage reports",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.1.1",
+    "istanbul-lib-coverage": "^3.2.0",
+    "p-limit": "^6.2.0",
+    "yargs": "^17.7.2"
+  }
+}
