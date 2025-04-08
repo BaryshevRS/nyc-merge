@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "docs": "cp README.md LICENSE packages/nyc-merge/dist",
     "lib:local:publish": "nx build nyc-merge && npm run docs && cd packages/nyc-merge/dist && npm publish --registry http://localhost:4873"
   },
-  "private": true,
   "dependencies": {},
   "devDependencies": {
     "@eslint/js": "^9.8.0",

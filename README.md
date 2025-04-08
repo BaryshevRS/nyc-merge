@@ -1,109 +1,101 @@
-# NycMerge
+# nyc-merge
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+**nyc-merge** is a lightweight Node.js tool designed to merge multiple Istanbul (nyc) coverage reports into a single, unified JSON report. This makes it easier to aggregate test coverage results from various sources and present a comprehensive overview.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+---
 
-## Generate a library
+## Features
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+- **Multi-Pattern Search:** Use one or more glob patterns to locate coverage files.
+- **Concurrent Processing:** Leverages parallel operations for fast file processing, configurable to match your machine's capabilities.
+- **Robust Merging:** Uses Istanbul’s coverage library to combine coverage data accurately.
+- **Error Reporting:** Logs errors encountered during file processing, ensuring that issues are visible and can be addressed.
+- **CLI Usability:** Provides a simple command line interface with clear options for output and concurrency.
+
+---
+
+## Installation
+
+Ensure you have Node.js (version 18 or higher) installed, then install **nyc-merge** globally via npm:
+
+```bash
+npm install -g nyc-merge
 ```
 
-## Run tasks
+Alternatively, you can add it to your project as a dependency:
 
-To build the library use:
-
-```sh
-npx nx build pkg1
+```bash
+npm install nyc-merge --save-dev
 ```
 
-To run any task with Nx use:
+---
 
-```sh
-npx nx <target> <project-name>
+## Usage
+
+After installation, you can run **nyc-merge** directly from the command line.
+
+### Command Syntax
+
+```bash
+nyc-merge --out <output.json> [--concurrency <number>] <glob-pattern> [<glob-pattern> ...]
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### Options
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- `--out, -o`  
+  **(Required)**  
+  Path to the output JSON file where the merged coverage report will be written.
 
-## Versioning and releasing
+- `--concurrency, -c`  
+  Number of parallel operations used to process files. Defaults to the number of CPU cores available.
 
-To version and release the library use
+### Examples
 
-```
-npx nx release
-```
+Merge all coverage files matching a single glob pattern:
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+```bash
+nyc-merge --out merged-coverage.json "coverage/**/coverage-final.json"
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+Merge coverage reports from multiple directories:
 
-```sh
-npx nx sync:check
+```bash
+nyc-merge --out merged-coverage.json "coverage/**/coverage-final.json" "test-coverage/**/coverage-final.json"
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+Customize concurrency:
 
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
+```bash
+nyc-merge --out merged-coverage.json --concurrency 4 "coverage/**/coverage-final.json"
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+---
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## How It Works
 
-### Step 2
+1. **File Discovery:**  
+   The tool utilizes [fast-glob](https://www.npmjs.com/package/fast-glob) to locate files matching the provided glob patterns.
 
-Use the following command to configure a CI workflow for your workspace:
+2. **File Processing:**  
+   Each found file is read asynchronously, and its JSON content is parsed. Any errors during this process are logged.
 
-```sh
-npx nx g ci-workflow
-```
+3. **Data Merging:**  
+   Istanbul’s [lib-coverage](https://www.npmjs.com/package/istanbul-lib-coverage) library is used to merge the JSON coverage reports into a single cohesive report.
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+4. **Output Generation:**  
+   The resulting merged JSON report is written to the specified output file. Directories are created as needed.
 
-## Install Nx Console
+---
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## Contributing
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Contributions are welcome! If you encounter issues, have suggestions, or want to contribute new features, please check the [issues](https://github.com/BaryshevRS/nyc-merge/issues) page and submit a pull request.
 
-## Useful links
+---
 
-Learn more:
+## License
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

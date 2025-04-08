@@ -7,9 +7,8 @@ import path from 'path';
 import os from 'os';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import * as istanbul from 'istanbul-lib-coverage';
-import { CoverageMapData } from 'istanbul-lib-coverage';
 import pLimit from 'p-limit';
+import istanbul, { CoverageMap, CoverageMapData } from 'istanbul-lib-coverage';
 
 interface GlobOptions {
   concurrency?: number;
@@ -38,7 +37,6 @@ async function findFiles(
       onlyFiles: true,
       absolute: true,
       concurrency: options.concurrency,
-      // deep: 10,
       followSymbolicLinks: false,
       ...options,
     });
@@ -60,7 +58,7 @@ async function processFile(file: string): Promise<CoverageMapData> {
 async function mergeCoverageFiles(
   files: string[],
   concurrency: number
-): Promise<istanbul.CoverageMap> {
+): Promise<CoverageMap> {
   const coverageMap = istanbul.createCoverageMap({});
   // Create a limit function with the p-limit module
   const limit = pLimit(concurrency);
@@ -117,7 +115,7 @@ async function main(): Promise<void> {
         alias: 'c',
         type: 'number',
         describe: 'Number of parallel operations when processing files',
-        default: Math.max(1, os.cpus().length - 1),
+        default: Math.max(1, os.cpus().length),
       })
       .demandCommand(
         1,

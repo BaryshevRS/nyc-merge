@@ -1,11 +1,28 @@
 {
   "name": "nyc-merge",
-  "version": "0.0.1",
+  "version": "0.0.14",
   "description": "A tool to merge Istanbul coverage reports",
+  "license": "MIT",
+  "author": {
+    "name": "Baryshev Ruslan",
+    "email": "baryshevrs@yandex.com",
+    "url": "https://github.com/BaryshevRS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BaryshevRS/nyc-merge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BaryshevRS/nyc-merge/issues"
+  },
+  "homepage": "https://github.com/BaryshevRS/nyc-merge#readme",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "nyc-merge": "./dist/lib/nyc-merge.js"
+  },
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -19,12 +36,21 @@
     "dist",
     "!**/*.tsbuildinfo"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "tslib": "^2.3.0",
+    "tslib": "^2.8.1",
     "fast-glob": "^3.3.3",
-    "fs-extra": "^11.1.1",
-    "istanbul-lib-coverage": "^3.2.0",
+    "istanbul-lib-coverage": "^3.2.2",
     "p-limit": "^6.2.0",
     "yargs": "^17.7.2"
-  }
+  },
+  "keywords": [
+    "nx",
+    "coverage",
+    "istanbul",
+    "merge",
+    "nyc"
+  ]
 }
