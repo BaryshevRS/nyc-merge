@@ -2,7 +2,7 @@
 
 **nyc-merge** is a lightweight Node.js tool designed to merge multiple Istanbul (nyc) coverage reports into a single, unified JSON report. This makes it easier to aggregate test coverage results from various sources and present a comprehensive overview.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![npm version](https://badge.fury.io/js/nyc-merge.svg)](https://badge.fury.io/js/nyc-merge) [![GitHub license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/ngx-rock/memoize-pipe/blob/main/LICENSE)
 
 ---
 

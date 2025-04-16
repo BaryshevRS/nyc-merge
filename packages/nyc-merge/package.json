@@ -1,6 +1,6 @@
 {
   "name": "nyc-merge",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "A tool to merge Istanbul coverage reports",
   "license": "MIT",
   "author": {

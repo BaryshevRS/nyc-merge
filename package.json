@@ -1,10 +1,11 @@
 {
   "name": "@nyc-merge/source",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "docs": "cp README.md LICENSE packages/nyc-merge/dist",
-    "lib:local:publish": "nx build nyc-merge && npm run docs && cd packages/nyc-merge/dist && npm publish --registry http://localhost:4873"
+    "docs": "cp README.md LICENSE packages/nyc-merge",
+    "lib:local:publish": "nx build nyc-merge && npm run docs && cd packages/nyc-merge/dist && npm publish --registry http://localhost:4873",
+    "lib:publish": "nx build nyc-merge && npm run docs && cd packages/nyc-merge/dist && npm publish --access=public"
   },
   "dependencies": {},
   "devDependencies": {
